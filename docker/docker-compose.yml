@@ -1,23 +1,40 @@
 version: '3.8'
 services:
+#  event-service:
+#    build:
+#      context: ../.
+#      dockerfile: Dockerfile
+#    container_name: event-service
+#    ports:
+#        - "9001:9001"
+#    environment:
+#        - SPRING_DATASOURCE_URL=jdbc:postgresql://event-db:5432/event_db
+#        - SPRING_DATASOURCE_USERNAME=postgres
+#        - SPRING_DATASOURCE_PASSWORD=postgres
+#        - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+#        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+#    depends_on:
+#      - eureka-server
+#      - event-db
+#    networks:
+#        - general
+
   event-service:
-    build:
-      context: ../.
-      dockerfile: Dockerfile
+    image: muholo/event-service:latest
     container_name: event-service
     ports:
-        - "9001:9001"
+      - "9001:9001"
     environment:
-        - SPRING_DATASOURCE_URL=jdbc:postgresql://event-db:5432/event_db
-        - SPRING_DATASOURCE_USERNAME=postgres
-        - SPRING_DATASOURCE_PASSWORD=postgres
-        - SPRING_JPA_HIBERNATE_DDL_AUTO=none
-        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://event-db:5432/event_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
     depends_on:
       - eureka-server
       - event-db
     networks:
-        - general
+      - general
 
   event-db:
     image: 'postgres:13.1-alpine'
@@ -39,6 +56,17 @@ services:
     networks:
       - general
     restart: always
+
+  gateway-service:
+    image: merttkayaa/gateway-service:latest
+    container_name: gateway-service
+    ports:
+      - "8765:8765"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+    restart: always
+    networks:
+      - general
 
 networks:
   general:
