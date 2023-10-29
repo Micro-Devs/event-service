@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  event-service:
+    build:
+      context: ../.
+      dockerfile: Dockerfile
+    container_name: event-service
+    ports:
+        - "9001:9001"
+    environment:
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://event-db:5432/event_db
+        - SPRING_DATASOURCE_USERNAME=postgres
+        - SPRING_DATASOURCE_PASSWORD=postgres
+        - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      - event-db
+    networks:
+        - general
+
+  event-db:
+    image: 'postgres:13.1-alpine'
+    container_name: event-db
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: event_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - general
+
+  eureka-server:
+    image: muholo/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - general
+    restart: always
+
+networks:
+  general:
+    driver: bridge
