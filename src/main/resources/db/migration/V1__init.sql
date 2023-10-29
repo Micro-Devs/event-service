@@ -1,5 +1,12 @@
 CREATE SCHEMA event;
 
+CREATE SEQUENCE common_sequence
+    START 1
+    INCREMENT 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE event.event
 (
     id                BIGINT PRIMARY KEY DEFAULT nextval('common_sequence'),
@@ -16,10 +23,3 @@ CREATE TABLE event.event_detail
     event_id BIGINT      NOT NULL,
     user_id  BIGINT      NOT NULL
 );
-
-CREATE SEQUENCE common_sequence
-    START 1
-    INCREMENT 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
