@@ -93,6 +93,19 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
+        <!--        Micro Devs-->
+        <dependency>
+            <groupId>com.microdevs</groupId>
+            <artifactId>base-service</artifactId>
+            <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-jpa</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!--        Snake Yaml-->
         <dependency>
             <groupId>org.yaml</groupId>
