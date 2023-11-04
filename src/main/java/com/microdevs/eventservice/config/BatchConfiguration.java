@@ -1,4 +1,4 @@
-package com.microdevs.eventservice.batch;
+package com.microdevs.eventservice.config;
 
 import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;

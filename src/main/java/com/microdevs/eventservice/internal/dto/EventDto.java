@@ -1,6 +1,6 @@
 package com.microdevs.eventservice.internal.dto;
 
-import com.microdevs.eventservice.enums.EventStatus;
+import com.microdevs.baseservice.enums.StatusType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +13,6 @@ public class EventDto implements Serializable {
     private String organizationName;
     private String eventName;
     private String location;
-    private EventStatus status;
+    private StatusType status;
     private LocalDateTime eventDate;
 }

@@ -1,7 +1,7 @@
 package com.microdevs.eventservice.data.entity;
 
-import com.microdevs.baseservice.service.AuditModelBase;
-import com.microdevs.eventservice.enums.EventStatus;
+import com.microdevs.baseservice.entity.AuditModelBase;
+import com.microdevs.baseservice.enums.StatusType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +35,7 @@ public class Event extends AuditModelBase implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private EventStatus status;
+    private StatusType status;
 
     @Column(name = "event_date", nullable = false)
     private LocalDateTime eventDate;
