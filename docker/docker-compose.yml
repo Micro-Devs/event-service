@@ -41,7 +41,7 @@ services:
     image: 'postgres:13.1-alpine'
     container_name: event-db
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       POSTGRES_DB: event_db
       POSTGRES_USER: postgres

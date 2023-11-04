@@ -21,7 +21,9 @@ CREATE TABLE event.event
 
 CREATE TABLE event.event_detail
 (
-    guid     VARCHAR(36) NOT NULL PRIMARY KEY,
-    event_id BIGINT      NOT NULL,
-    user_id  BIGINT      NOT NULL
+    guid       VARCHAR(36) NOT NULL PRIMARY KEY,
+    event_id   BIGINT      NOT NULL,
+    user_id    BIGINT      NOT NULL,
+    updated_at DATE,
+    created_at DATE
 );

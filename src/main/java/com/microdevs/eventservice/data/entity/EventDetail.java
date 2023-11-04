@@ -1,6 +1,6 @@
 package com.microdevs.eventservice.data.entity;
 
-import com.microdevs.baseservice.service.AuditModelBase;
+import com.microdevs.baseservice.entity.AuditModelBase;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
