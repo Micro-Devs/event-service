@@ -14,7 +14,9 @@ CREATE TABLE event.event
     event_name        VARCHAR(30)  NOT NULL,
     location          VARCHAR(100) NOT NULL,
     status            VARCHAR(10)  NOT NULL,
-    event_date        DATE
+    event_date        DATE,
+    updated_at        DATE,
+    created_at        DATE
 );
 
 CREATE TABLE event.event_detail

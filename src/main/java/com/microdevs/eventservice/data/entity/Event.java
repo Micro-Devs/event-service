@@ -5,8 +5,10 @@ import com.microdevs.eventservice.enums.EventStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,7 +16,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Event extends AuditModelBase {
+@Setter
+public class Event extends AuditModelBase implements Serializable {
 
     @Id
     @GeneratedValue(generator = "common_sequence", strategy = GenerationType.SEQUENCE)
