@@ -1,7 +1,11 @@
 package com.microdevs.eventservice.internal;
 
+import com.microdevs.baseservice.enums.StatusType;
 import com.microdevs.eventservice.api.filter.FilterEvent;
 import com.microdevs.eventservice.data.entity.Event;
+import com.microdevs.eventservice.exception.EventDeletedException;
+import com.microdevs.eventservice.util.ExceptionUtil;
+import com.microdevs.eventservice.util.MessageUtil;
 import lombok.experimental.UtilityClass;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -19,27 +23,37 @@ public class EventSpecification {
         return (Root<Event> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            // ID kontrolü
+            // Check ID
             if (filter.getId() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("id"), filter.getId()));
             }
 
-            // Organization Name kontrolü
+            // Check Organization Name
             if (filter.getOrganizationName() != null && !filter.getOrganizationName().trim().isEmpty()) {
                 predicates.add(criteriaBuilder.equal(root.get("organizationName"), filter.getOrganizationName()));
             }
 
-            // Event Name kontrolü
+            // Check Event Name
             if (filter.getEventName() != null && !filter.getEventName().trim().isEmpty()) {
                 predicates.add(criteriaBuilder.equal(root.get("eventName"), filter.getEventName()));
             }
 
-            // Start Time kontrolü
+            // Check Status
+            if (filter.getStatus() != null && filter.getStatus() != StatusType.TERMINATED) {
+                predicates.add(criteriaBuilder.equal(root.get("status"), filter.getStatus()));
+            }
+
+            if (filter.getStatus() != null && filter.getStatus() == StatusType.TERMINATED) {
+                throw new EventDeletedException(ExceptionUtil.EVENT_DELETED.getMessage(), ExceptionUtil.EVENT_DELETED.getCode()
+                        , MessageUtil.getMessageDetail(MessageUtil.EVENT_IS_DELETED));
+            }
+
+            // Check Start Time
             if (filter.getStartTime() != null) {
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("eventDate"), filter.getStartTime()));
             }
 
-            // End Time kontrolü
+            // Check End Time
             if (filter.getEndTime() != null) {
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("eventDate"), filter.getEndTime()));
             }

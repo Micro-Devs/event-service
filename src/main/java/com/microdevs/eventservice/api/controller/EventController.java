@@ -39,6 +39,11 @@ public class EventController {
         return service.updateStatusSuspend(id);
     }
 
+    @PutMapping("/{id}/status/activve")
+    public EventDto updateStatusActive(@PathVariable(value = "id") Long id) {
+        return service.updateStatusActive(id);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEvent(@PathVariable(value = "id") Long id) {
         service.deleteEvent(id);
@@ -46,8 +51,8 @@ public class EventController {
     }
 
     @GetMapping
-    public Page<EventDto> getEvent(FilterEvent filter, Pageable pageable) {
-        return service.findEvent(filter, pageable);
+    public Page<EventDto> getEvents(FilterEvent filter, Pageable pageable) {
+        return service.findEvents(filter, pageable);
     }
 
 }

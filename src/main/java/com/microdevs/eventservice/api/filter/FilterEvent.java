@@ -6,6 +6,7 @@ import com.microdevs.baseservice.enums.StatusType;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -32,5 +33,10 @@ public class FilterEvent {
 
     @ValidLocalDateTimeFormat
     private LocalDateTime endTime;
+
+    @AssertTrue(message = "A deleted event cannot be viewed. StatusType must be ACTIVE or SUSPEND")
+    public boolean statusIsValid() {
+        return this.status.equals(StatusType.TERMINATED);
+    }
 
 }

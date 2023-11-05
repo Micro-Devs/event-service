@@ -4,9 +4,14 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class MessageUtil {
-    private static final String EVENT_NOT_FOUND_WITH_ID = "No event record found for id number %d";
+    public static final String EVENT_NOT_FOUND_WITH_ID = "No event record found for id number %s";
+    public static final String EVENT_IS_DELETED = "This event has been deleted.";
 
-    public static String getMessageDetail(Long id) {
-        return String.format(EVENT_NOT_FOUND_WITH_ID, id);
+    public static String getMessageDetail(String message, Object argument) {
+        return String.format(message, argument.toString());
+    }
+
+    public static String getMessageDetail(String message) {
+        return String.format(message);
     }
 }
