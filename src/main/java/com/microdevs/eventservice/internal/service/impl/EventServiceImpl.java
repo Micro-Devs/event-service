@@ -66,7 +66,7 @@ public class EventServiceImpl implements EventService {
         return eventDataService.getEventsWithSpec(spec, pageable);
     }
 
-    private static void checkTerminateStatus(EventDto eventDto) {
+    private void checkTerminateStatus(EventDto eventDto) {
         if (eventDto.getStatus().equals(StatusType.TERMINATED)) {
             throw new EventDeletedException(ExceptionUtil.EVENT_DELETED.getMessage(), ExceptionUtil.EVENT_DELETED.getCode()
                     , MessageUtil.getMessageDetail(MessageUtil.EVENT_IS_DELETED));

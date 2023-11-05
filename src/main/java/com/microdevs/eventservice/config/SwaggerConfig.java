@@ -41,11 +41,9 @@ public class SwaggerConfig {
 
     @Bean
     public OpenApiCustomiser openApiCustomiser() {
-        return openApi -> openApi.getPaths().values().forEach(pathItem -> pathItem.readOperations().forEach(operation -> {
-            operation.addParametersItem(new HeaderParameter()
-                    .name("X-Custom-Event-Header")
-                    .required(false)
-                    .description("A custom header to provide additional information."));
-        }));
+        return openApi -> openApi.getPaths().values().forEach(pathItem -> pathItem.readOperations().forEach(operation -> operation.addParametersItem(new HeaderParameter()
+                .name("X-Custom-Event-Header")
+                .required(false)
+                .description("A custom header to provide additional information."))));
     }
 }

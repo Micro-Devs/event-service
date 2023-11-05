@@ -53,7 +53,6 @@ public class EventController {
     @GetMapping
     public Page<EventDto> getEvents(FilterEvent filter, Pageable pageable) {
         return service.findEvents(filter, pageable);
-        //deneme
     }
 
 }
