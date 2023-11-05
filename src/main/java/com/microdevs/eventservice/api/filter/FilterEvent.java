@@ -1,5 +1,6 @@
 package com.microdevs.eventservice.api.filter;
 
+import com.microdevs.baseservice.annotation.EnumValidator;
 import com.microdevs.baseservice.annotation.ValidLocalDateTimeFormat;
 import com.microdevs.baseservice.enums.StatusType;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class FilterEvent {
     @Pattern(regexp = "^[A-Za-z]+$", message = "'eventName' must consist of characters only")
     private String eventName;
 
+    @EnumValidator(enumClass = StatusType.class)
     private StatusType status;
 
     @ValidLocalDateTimeFormat
