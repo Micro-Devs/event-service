@@ -1,11 +1,18 @@
 package com.microdevs.eventservice.data.service;
 
 import com.microdevs.baseservice.enums.StatusType;
+import com.microdevs.baseservice.exception.EventNotFoundException;
 import com.microdevs.eventservice.api.request.CreateEventDto;
+import com.microdevs.eventservice.api.request.UpdateEventDto;
 import com.microdevs.eventservice.data.entity.Event;
 import com.microdevs.eventservice.data.mapper.EventMapper;
 import com.microdevs.eventservice.data.repository.EventRepository;
 import com.microdevs.eventservice.internal.dto.EventDto;
+import com.microdevs.eventservice.util.ExceptionUtil;
+import com.microdevs.eventservice.util.MessageUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,9 +29,43 @@ public class EventDataService {
     }
 
     @Transactional
-    public EventDto saveEvent(CreateEventDto createEventDto) {
-        Event event = mapper.toEntity(createEventDto, StatusType.ACTIVE);
+    public EventDto createEvent(CreateEventDto createEventDto) {
+        Event event = mapper.toCreateEntity(createEventDto, StatusType.ACTIVE);
         Event savedEvent = repository.save(event);
         return mapper.toDto(savedEvent);
+    }
+
+    @Transactional
+    public EventDto updateEvent(Long id, UpdateEventDto updateEventDto) {
+        Event event = getEventById(id);
+        Event updatedEvent = mapper.updateEvent(event, updateEventDto);
+        return mapper.toDto(updatedEvent);
+    }
+
+    @Transactional
+    public Page<EventDto> getEventWithSpec(Specification<Event> spec, Pageable pageable) {
+        Page<Event> eventPage = repository.findAll(spec, pageable);
+        return mapper.mapEventPageToEventDTOPage(eventPage, pageable);
+    }
+
+    @Transactional
+    public EventDto getEventDtoById(Long id) {
+        Event event = repository.findById(id)
+                .orElseThrow(() -> new EventNotFoundException(ExceptionUtil.EVENT_NOT_FOUND.getMessage()
+                        , ExceptionUtil.EVENT_NOT_FOUND.getCode(), MessageUtil.getMessageDetail(id)));
+        return mapper.toDto(event);
+    }
+
+    @Transactional
+    public EventDto saveEvent(EventDto eventDto) {
+        Event event = mapper.toEntity(eventDto);
+        Event updatedEvent = repository.save(event);
+        return mapper.toDto(updatedEvent);
+    }
+
+    private Event getEventById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EventNotFoundException(ExceptionUtil.EVENT_NOT_FOUND.getMessage()
+                        , ExceptionUtil.EVENT_NOT_FOUND.getCode(), MessageUtil.getMessageDetail(id)));
     }
 }
