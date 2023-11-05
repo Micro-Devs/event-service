@@ -36,14 +36,15 @@ public class EventDataService {
     }
 
     @Transactional
-    public EventDto updateEvent(Long id, UpdateEventDto updateEventDto) {
-        Event event = getEventById(id);
-        Event updatedEvent = mapper.updateEvent(event, updateEventDto);
-        return mapper.toDto(updatedEvent);
+    public EventDto updateEvent(EventDto eventDto, UpdateEventDto updateEventDto) {
+        Event event = mapper.toEntity(eventDto);
+        Event mappedEvent = mapper.updateEvent(event, updateEventDto);
+        Event savedEvent = repository.save(mappedEvent);
+        return mapper.toDto(savedEvent);
     }
 
     @Transactional
-    public Page<EventDto> getEventWithSpec(Specification<Event> spec, Pageable pageable) {
+    public Page<EventDto> getEventsWithSpec(Specification<Event> spec, Pageable pageable) {
         Page<Event> eventPage = repository.findAll(spec, pageable);
         return mapper.mapEventPageToEventDTOPage(eventPage, pageable);
     }
@@ -52,7 +53,8 @@ public class EventDataService {
     public EventDto getEventDtoById(Long id) {
         Event event = repository.findById(id)
                 .orElseThrow(() -> new EventNotFoundException(ExceptionUtil.EVENT_NOT_FOUND.getMessage()
-                        , ExceptionUtil.EVENT_NOT_FOUND.getCode(), MessageUtil.getMessageDetail(id)));
+                        , ExceptionUtil.EVENT_NOT_FOUND.getCode()
+                        , MessageUtil.getMessageDetail(MessageUtil.EVENT_NOT_FOUND_WITH_ID, id)));
         return mapper.toDto(event);
     }
 
@@ -66,6 +68,7 @@ public class EventDataService {
     private Event getEventById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new EventNotFoundException(ExceptionUtil.EVENT_NOT_FOUND.getMessage()
-                        , ExceptionUtil.EVENT_NOT_FOUND.getCode(), MessageUtil.getMessageDetail(id)));
+                        , ExceptionUtil.EVENT_NOT_FOUND.getCode()
+                        , MessageUtil.getMessageDetail(MessageUtil.EVENT_NOT_FOUND_WITH_ID, id)));
     }
 }

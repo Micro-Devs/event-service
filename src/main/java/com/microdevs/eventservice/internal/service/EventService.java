@@ -12,9 +12,11 @@ public interface EventService {
 
     EventDto updateEvent(Long id, UpdateEventDto updateEventDto);
 
-    Page<EventDto> findEvent(FilterEvent filter, Pageable pageable);
+    Page<EventDto> findEvents(FilterEvent filter, Pageable pageable);
 
     void deleteEvent(Long id);
 
     EventDto updateStatusSuspend(Long id);
+
+    EventDto updateStatusActive(Long id);
 }

@@ -6,9 +6,12 @@ import com.microdevs.eventservice.api.request.CreateEventDto;
 import com.microdevs.eventservice.api.request.UpdateEventDto;
 import com.microdevs.eventservice.data.entity.Event;
 import com.microdevs.eventservice.data.service.EventDataService;
+import com.microdevs.eventservice.exception.EventDeletedException;
 import com.microdevs.eventservice.internal.EventSpecification;
 import com.microdevs.eventservice.internal.dto.EventDto;
 import com.microdevs.eventservice.internal.service.EventService;
+import com.microdevs.eventservice.util.ExceptionUtil;
+import com.microdevs.eventservice.util.MessageUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -29,13 +32,24 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventDto updateEvent(Long id, UpdateEventDto updateEventDto) {
-        return eventDataService.updateEvent(id, updateEventDto);
+        EventDto eventDto = eventDataService.getEventDtoById(id);
+        checkTerminateStatus(eventDto);
+        return eventDataService.updateEvent(eventDto, updateEventDto);
     }
 
     @Override
     public EventDto updateStatusSuspend(Long id) {
         EventDto eventDto = eventDataService.getEventDtoById(id);
+        checkTerminateStatus(eventDto);
         eventDto.setStatus(StatusType.SUSPEND);
+        return eventDataService.saveEvent(eventDto);
+    }
+
+    @Override
+    public EventDto updateStatusActive(Long id) {
+        EventDto eventDto = eventDataService.getEventDtoById(id);
+        checkTerminateStatus(eventDto);
+        eventDto.setStatus(StatusType.ACTIVE);
         return eventDataService.saveEvent(eventDto);
     }
 
@@ -47,8 +61,15 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Page<EventDto> findEvent(FilterEvent filter, Pageable pageable) {
+    public Page<EventDto> findEvents(FilterEvent filter, Pageable pageable) {
         Specification<Event> spec = EventSpecification.eventWithFilters(filter);
-        return eventDataService.getEventWithSpec(spec, pageable);
+        return eventDataService.getEventsWithSpec(spec, pageable);
+    }
+
+    private static void checkTerminateStatus(EventDto eventDto) {
+        if (eventDto.getStatus().equals(StatusType.TERMINATED)) {
+            throw new EventDeletedException(ExceptionUtil.EVENT_DELETED.getMessage(), ExceptionUtil.EVENT_DELETED.getCode()
+                    , MessageUtil.getMessageDetail(MessageUtil.EVENT_IS_DELETED));
+        }
     }
 }
