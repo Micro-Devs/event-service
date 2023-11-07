@@ -16,7 +16,8 @@ CREATE TABLE event.event
     status            VARCHAR(10)  NOT NULL,
     event_date        DATE,
     updated_at        DATE,
-    created_at        DATE
+    created_at        DATE,
+    CONSTRAINT unique_event UNIQUE (organization_name, event_name, event_date)
 );
 
 CREATE TABLE event.event_detail
