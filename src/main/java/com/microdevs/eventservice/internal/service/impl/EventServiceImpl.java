@@ -6,6 +6,7 @@ import com.microdevs.eventservice.api.request.CreateEventDto;
 import com.microdevs.eventservice.api.request.UpdateEventDto;
 import com.microdevs.eventservice.data.entity.Event;
 import com.microdevs.eventservice.data.service.EventDataService;
+import com.microdevs.eventservice.exception.EventAlreadyExistsException;
 import com.microdevs.eventservice.exception.EventDeletedException;
 import com.microdevs.eventservice.internal.EventSpecification;
 import com.microdevs.eventservice.internal.dto.EventDto;
@@ -27,7 +28,14 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventDto createEvent(CreateEventDto createEventDto) {
-        return eventDataService.createEvent(createEventDto);
+        boolean checkUniqueEvent = eventDataService.checkUniqueEvent(createEventDto);
+
+        if (checkUniqueEvent) {
+            throw new EventAlreadyExistsException(ExceptionUtil.EVENT_ALREADY_EXISTS.getMessage()
+                    , ExceptionUtil.EVENT_ALREADY_EXISTS.getCode(), MessageUtil.EVENT_ALREADY_EXISTS);
+        }
+
+        return eventDataService.saveNewEvent(createEventDto);
     }
 
     @Override

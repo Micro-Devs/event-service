@@ -39,7 +39,7 @@ public class EventController {
         return service.updateStatusSuspend(id);
     }
 
-    @PutMapping("/{id}/status/activve")
+    @PutMapping("/{id}/status/active")
     public EventDto updateStatusActive(@PathVariable(value = "id") Long id) {
         return service.updateStatusActive(id);
     }
@@ -47,7 +47,7 @@ public class EventController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEvent(@PathVariable(value = "id") Long id) {
         service.deleteEvent(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping

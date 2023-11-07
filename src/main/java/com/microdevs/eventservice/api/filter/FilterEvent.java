@@ -1,12 +1,10 @@
 package com.microdevs.eventservice.api.filter;
 
 import com.microdevs.baseservice.annotation.EnumValidator;
-import com.microdevs.baseservice.annotation.ValidLocalDateTimeFormat;
 import com.microdevs.baseservice.enums.StatusType;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -28,15 +26,15 @@ public class FilterEvent {
     @EnumValidator(enumClass = StatusType.class)
     private StatusType status;
 
-    @ValidLocalDateTimeFormat
+    //    @ValidLocalDateTimeFormat
     private LocalDateTime startTime;
 
-    @ValidLocalDateTimeFormat
+    //    @ValidLocalDateTimeFormat
     private LocalDateTime endTime;
 
-    @AssertTrue(message = "A deleted event cannot be viewed. StatusType must be ACTIVE or SUSPEND")
-    public boolean statusIsValid() {
-        return this.status.equals(StatusType.TERMINATED);
-    }
+//    @AssertTrue(message = "A deleted event cannot be viewed. StatusType must be ACTIVE or SUSPEND")
+//    public boolean statusIsValid() {
+//        return this.status.equals(StatusType.TERMINATED);
+//    }
 
 }
