@@ -14,8 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EventDataService {
@@ -28,8 +27,27 @@ public class EventDataService {
         this.mapper = mapper;
     }
 
+//    public EventDto createEvent(CreateEventDto createEventDto) {
+//        boolean isExists = repository.existsByOrganizationNameAndEventNameAndEventDate(createEventDto.getOrganizationName()
+//                , createEventDto.getEventName(), createEventDto.getEventDate());
+//
+//        if (isExists) {
+//            throw new EventAlreadyExistsException(ExceptionUtil.EVENT_ALREADY_EXISTS.getMessage()
+//                    , ExceptionUtil.EVENT_ALREADY_EXISTS.getCode(), MessageUtil.EVENT_ALREADY_EXISTS);
+//        }
+//
+//        Event event = mapper.toCreateEntity(createEventDto, StatusType.ACTIVE);
+//        Event savedEvent = saveNewEvent(event);
+//        return mapper.toDto(savedEvent);
+//    }
+
+    public boolean checkUniqueEvent(CreateEventDto createEventDto) {
+        return repository.existsByOrganizationNameAndEventNameAndEventDate(createEventDto.getOrganizationName()
+                , createEventDto.getEventName(), createEventDto.getEventDate());
+    }
+
     @Transactional
-    public EventDto createEvent(CreateEventDto createEventDto) {
+    public EventDto saveNewEvent(CreateEventDto createEventDto) {
         Event event = mapper.toCreateEntity(createEventDto, StatusType.ACTIVE);
         Event savedEvent = repository.save(event);
         return mapper.toDto(savedEvent);
