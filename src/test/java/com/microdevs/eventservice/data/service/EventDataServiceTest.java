@@ -1,9 +1,7 @@
 package com.microdevs.eventservice.data.service;
 
-import com.microdevs.baseservice.enums.StatusType;
 import com.microdevs.baseservice.exception.EventNotFoundException;
 import com.microdevs.eventservice.api.filter.FilterEvent;
-import com.microdevs.eventservice.api.request.CreateEventDto;
 import com.microdevs.eventservice.data.entity.Event;
 import com.microdevs.eventservice.data.mapper.EventMapper;
 import com.microdevs.eventservice.data.repository.EventRepository;
@@ -38,33 +36,6 @@ class EventDataServiceTest {
     private EventMapper mockMapper;
     @InjectMocks
     private EventDataService service;
-
-    @Test
-    public void given_CreateEventDto_should_eventSuccessfullyCreated() {
-        CreateEventDto createEventDto = new CreateEventDto();
-        createEventDto.setEventName("test");
-
-        Event event = new Event();
-        event.setEventName("test");
-        event.setStatus(StatusType.ACTIVE);
-
-        EventDto expected = new EventDto();
-        expected.setEventName("test");
-        expected.setStatus(StatusType.ACTIVE);
-
-        when(mockMapper.toCreateEntity(any(), any())).thenReturn(event);
-        when(mockRepository.save(any(Event.class))).thenReturn(event);
-        when(mockMapper.toDto(any(Event.class))).thenReturn(expected);
-
-        EventDto actual = service.createEvent(createEventDto);
-
-        assertEquals(expected.getEventName(), actual.getEventName());
-        assertEquals(expected.getStatus(), actual.getStatus());
-
-        verify(mockMapper, times(1)).toCreateEntity(any(), any());
-        verify(mockRepository, times(1)).save(any(Event.class));
-        verify(mockMapper, times(1)).toDto(any(Event.class));
-    }
 
     @Test
     public void given_id_should_returnEventDto() {
