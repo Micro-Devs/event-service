@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "event")
@@ -54,6 +55,11 @@ public class EventController {
     public Page<EventDto> getEvents(FilterEvent filter, Pageable pageable) {
         return service.findEvents(filter, pageable);
         //deneme
+    }
+
+    @GetMapping("/getAllEvents")
+    public List<EventDto> getAllEvents() {
+        return service.getAllEvents();
     }
 
 }

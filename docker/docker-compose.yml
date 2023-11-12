@@ -40,6 +40,8 @@ services:
   event-db:
     image: 'postgres:13.1-alpine'
     container_name: event-db
+    volumes:
+      - event_db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
@@ -84,6 +86,7 @@ services:
 
 volumes:
   redis_data:
+  event_db_data:
 
 networks:
   general:

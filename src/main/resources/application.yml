@@ -14,14 +14,12 @@ spring:
     hibernate:
       ddl-auto: none
   cache:
-    cache-names: [ event,events ]
+    cache-names: [ events ]
     redis:
       host-name: localhost
       port: 6379
       time-to-live: 3600s
       cache-config:
-        event:
-          ttl: 10800
         events:
           ttl: 10800
 

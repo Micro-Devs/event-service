@@ -7,6 +7,8 @@ import com.microdevs.eventservice.internal.dto.EventDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface EventService {
     EventDto createEvent(CreateEventDto createEventDto);
 
@@ -19,4 +21,6 @@ public interface EventService {
     EventDto updateStatusSuspend(Long id);
 
     EventDto updateStatusActive(Long id);
+
+    List<EventDto> getAllEvents();
 }

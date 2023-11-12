@@ -16,6 +16,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class EventDataService {
 
@@ -88,5 +90,10 @@ public class EventDataService {
                 .orElseThrow(() -> new EventNotFoundException(ExceptionUtil.EVENT_NOT_FOUND.getMessage()
                         , ExceptionUtil.EVENT_NOT_FOUND.getCode()
                         , MessageUtil.getMessageDetail(MessageUtil.EVENT_NOT_FOUND_WITH_ID, id)));
+    }
+
+    public List<EventDto> getAllEvents() {
+        List<Event> events = repository.findAll();
+        return mapper.toEntityList(events);
     }
 }
