@@ -1,5 +1,9 @@
 package com.microdevs.eventservice.data.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.microdevs.baseservice.entity.AuditModelBase;
 import com.microdevs.baseservice.enums.StatusType;
 import lombok.AllArgsConstructor;
@@ -38,6 +42,8 @@ public class Event extends AuditModelBase implements Serializable {
     private StatusType status;
 
     @Column(name = "event_date", nullable = false)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime eventDate;
 
 }

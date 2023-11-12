@@ -13,10 +13,14 @@ import com.microdevs.eventservice.internal.dto.EventDto;
 import com.microdevs.eventservice.internal.service.EventService;
 import com.microdevs.eventservice.util.ExceptionUtil;
 import com.microdevs.eventservice.util.MessageUtil;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -27,6 +31,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @CacheEvict(value = "events", allEntries = true)
     public EventDto createEvent(CreateEventDto createEventDto) {
         boolean checkUniqueEvent = eventDataService.checkUniqueEvent(createEventDto);
 
@@ -36,6 +41,12 @@ public class EventServiceImpl implements EventService {
         }
 
         return eventDataService.saveNewEvent(createEventDto);
+    }
+
+    @Override
+    @Cacheable(value = "events", cacheNames = "events", keyGenerator = "keyGenerator")
+    public List<EventDto> getAllEvents() {
+        return eventDataService.getAllEvents();
     }
 
     @Override

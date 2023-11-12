@@ -30,4 +30,6 @@ public abstract class EventMapper {
     }
 
     public abstract Event toEntity(EventDto eventDto);
+
+    public abstract List<EventDto> toEntityList(List<Event> events);
 }
