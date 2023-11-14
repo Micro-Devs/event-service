@@ -30,6 +30,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=none
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - JASYPT_ENCRYPTOR_PASSWORD=admin
     depends_on:
       - eureka-server
       - event-db
