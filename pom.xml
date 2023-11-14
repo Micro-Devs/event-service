@@ -142,6 +142,13 @@
             </exclusions>
         </dependency>
 
+        <!--        Jasypt-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
         <!--        Snake Yaml-->
         <dependency>
             <groupId>org.yaml</groupId>

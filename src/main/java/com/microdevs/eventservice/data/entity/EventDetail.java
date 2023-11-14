@@ -1,6 +1,6 @@
 package com.microdevs.eventservice.data.entity;
 
-import com.microdevs.baseservice.entity.AuditModelBase;
+import com.microdevs.baseservice.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class EventDetail extends AuditModelBase {
+public class EventDetail extends BaseEntity {
 
     @Id
     @Column(name = "guid", nullable = false)
