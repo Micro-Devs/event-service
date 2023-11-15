@@ -22,7 +22,7 @@ public class EventDetail extends BaseEntity {
 
     @Id
     @Column(name = "guid", nullable = false)
-    private UUID guid = UUID.randomUUID();
+    private UUID guid;
 
     @Column(name = "event_id", nullable = false)
     private Long eventId;

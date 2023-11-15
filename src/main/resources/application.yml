@@ -22,6 +22,10 @@ spring:
       cache-config:
         events:
           ttl: 10800
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 eureka:
   client:
