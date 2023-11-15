@@ -1,0 +1,1 @@
+package com.microdevs.eventservice.external.dto;
