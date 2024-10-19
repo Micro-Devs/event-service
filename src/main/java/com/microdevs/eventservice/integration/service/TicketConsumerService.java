@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class TicketConsumerService {
 
     private final EventDetailService service;
-    @KafkaListener(topics = "ticket-activity", containerFactory = "ticketConsumerFactory")
+    @KafkaListener(topics = "ticket-activity")
     public void listenTicketService(EventDetailDto eventDetail) {
         service.saveEventDetail(eventDetail);
     }

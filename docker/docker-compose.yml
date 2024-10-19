@@ -44,7 +44,7 @@ services:
     volumes:
       - event_db_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5435:5432"
     environment:
       POSTGRES_DB: event_db
       POSTGRES_USER: postgres
