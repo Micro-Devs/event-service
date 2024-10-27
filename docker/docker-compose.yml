@@ -25,7 +25,7 @@ services:
     ports:
       - "9001:9001"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://event-db:5432/event_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://event-db:5433/event_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=none
@@ -44,7 +44,7 @@ services:
     volumes:
       - event_db_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_DB: event_db
       POSTGRES_USER: postgres
