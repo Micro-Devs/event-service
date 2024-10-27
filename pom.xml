@@ -31,7 +31,7 @@
         <dep.postgres.version>42.5.4</dep.postgres.version>
         <dep.mapstruct.version>1.4.2.Final</dep.mapstruct.version>
         <dep.lombok.version>1.18.20</dep.lombok.version>
-        <dep.base-service.version>1.0.7</dep.base-service.version>
+        <dep.base-service.version>1.0.8</dep.base-service.version>
         <dep.openapi.version>1.6.12</dep.openapi.version>
         <dep.snakeyaml.version>2.0</dep.snakeyaml.version>
         <dep.spring-cloud.version>2021.0.8</dep.spring-cloud.version>
@@ -135,7 +135,7 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
-        <!--        Micro Devs-->
+        <!--                Micro Devs-->
         <dependency>
             <groupId>com.microdevs</groupId>
             <artifactId>base-service</artifactId>

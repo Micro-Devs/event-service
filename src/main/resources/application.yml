@@ -2,7 +2,7 @@ spring:
   application:
     name: event-service
   datasource:
-    url: jdbc:postgresql://localhost:5435/event_db
+    url: jdbc:postgresql://localhost:5432/event_db
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -24,18 +24,15 @@ spring:
           ttl: 10800
   kafka:
     bootstrap-servers:
-      - kafka1:9092
-      - kafka2:9093
+      - localhost:9099
     consumer:
       group-id: ticket-service-group
-      auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     listener:
       concurrency: 3
     topic:
       name: ticket-activity
-
 eureka:
   client:
     service-url:
